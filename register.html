@@ -3,72 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng ký tài khoản</title>
+    <title>Đăng ký tài khoản Premium</title>
     <style>
-        /* CSS cơ bản để căn giữa và làm đẹp form */
+        /* Reset khoảng cách mặc định của trình duyệt */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Phủ nền gradient hiện đại */
+            background: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            min-height: 100vh;
         }
+
         .register-container {
             background-color: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 40px 30px;
+            border-radius: 12px; /* Bo góc mềm mại hơn */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Đổ bóng sâu hơn */
             width: 100%;
-            max-width: 350px;
+            max-width: 400px;
         }
+
         h2 {
             text-align: center;
             color: #333;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            font-size: 26px;
         }
+
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
+
         label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+            font-size: 14px;
         }
+
+        /* Styling cho tất cả các loại ô nhập liệu */
         input[type="text"],
         input[type="email"],
-        input[type="password"] {
+        input[type="password"],
+        input[type="tel"] {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box; /* Đảm bảo padding không làm tăng chiều rộng */
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease; /* Tạo hiệu ứng mượt khi thay đổi trạng thái */
         }
+
+        /* Hiệu ứng viền sáng lên khi người dùng click vào ô nhập */
+        input:focus {
+            border-color: #74ebd5;
+            outline: none;
+            box-shadow: 0 0 8px rgba(116, 235, 213, 0.4);
+        }
+
+        /* Styling cho phần checkbox điều khoản */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .checkbox-group input {
+            margin-right: 8px;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .checkbox-group a {
+            color: #764ba2;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .checkbox-group a:hover {
+            text-decoration: underline;
+        }
+
+        /* Chăm chút cho nút bấm Submit */
         .btn-submit {
             width: 100%;
-            padding: 10px;
-            background-color: #007bff;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
             color: white;
             font-size: 16px;
-            border-radius: 4px;
+            font-weight: bold;
+            border-radius: 6px;
             cursor: pointer;
-            margin-top: 10px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
+
+        /* Hiệu ứng nổi bọt khi rê chuột vào nút */
         .btn-submit:hover {
-            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(118, 75, 162, 0.4);
         }
+
+        /* Hiệu ứng lún xuống khi click vào nút */
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
         .login-link {
             text-align: center;
-            margin-top: 15px;
+            margin-top: 20px;
             font-size: 14px;
+            color: #666;
         }
+
         .login-link a {
-            color: #007bff;
+            color: #764ba2;
+            font-weight: bold;
             text-decoration: none;
         }
+
         .login-link a:hover {
             text-decoration: underline;
         }
@@ -77,33 +142,46 @@
 <body>
 
     <div class="register-container">
-        <h2>Đăng Ký</h2>
+        <h2>Tạo Tài Khoản</h2>
+        
         <form action="/register-endpoint" method="POST">
             <div class="form-group">
                 <label for="username">Tên đăng nhập:</label>
-                <input type="text" id="username" name="username" placeholder="Nhập tên đăng nhập" required>
+                <input type="text" id="username" name="username" placeholder="Ví dụ: nguyenvan_a" required>
             </div>
             
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Nhập địa chỉ email" required>
+                <input type="email" id="email" name="email" placeholder="example@gmail.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Số điện thoại:</label>
+                <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại của bạn" pattern="[0-9]{10,11}" title="Vui lòng nhập số điện thoại hợp lệ" required>
             </div>
             
             <div class="form-group">
                 <label for="password">Mật khẩu:</label>
-                <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" required>
+                <input type="password" id="password" name="password" placeholder="Tạo mật khẩu (ít nhất 6 ký tự)" minlength="6" required>
             </div>
             
             <div class="form-group">
                 <label for="confirm_password">Xác nhận mật khẩu:</label>
                 <input type="password" id="confirm_password" name="confirm_password" placeholder="Nhập lại mật khẩu" required>
             </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms" style="margin-bottom: 0; font-weight: normal;">
+                    Tôi đồng ý với các <a href="#">Điều khoản & Chính sách</a>
+                </label>
+            </div>
             
-            <button type="submit" class="btn-submit">Tạo Tài Khoản</button>
+            <button type="submit" class="btn-submit">Đăng Ký Ngay</button>
         </form>
         
         <div class="login-link">
-            Đã có tài khoản? <a href="login.html">Đăng nhập ngay</a>
+            Đã có tài khoản? <a href="login.html">Đăng nhập</a>
         </div>
     </div>
 
