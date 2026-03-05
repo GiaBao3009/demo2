@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Cart</title>
+
+    <style>
+        body{
+            font-family: Arial;
+            margin:0;
+            padding:24px;
+            background:#f6f7fb;
+            color:#1f2937;
+        }
+
+        h2,h3{
+            margin:0 0 16px 0;
+        }
+
+        .layout{
+            display:grid;
+            grid-template-columns: 2fr 1fr;
+            gap:20px;
+            align-items:start;
+        }
+
+        .card{
+            background:#fff;
+            border:1px solid #e5e7eb;
+            border-radius:10px;
+            padding:16px;
+            box-shadow:0 1px 2px rgba(0,0,0,0.04);
+        }
+
+        .products{
+            display:grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap:12px;
+        }
+
+        .product{
+            border:1px solid #e5e7eb;
+            padding:12px;
+            border-radius:8px;
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+
+        .product-title{
+            font-weight:bold;
+        }
+
+        .price{
+            font-weight:bold;
+            color:#0f766e;
+        }
+
+        button{
+            padding:8px 10px;
+            border-radius:6px;
+            border:1px solid #d1d5db;
+            background:#111827;
+            color:#fff;
+            cursor:pointer;
+        }
+
+        button.secondary{
+            background:#fff;
+            color:#111827;
+        }
+
+        button:disabled{
+            opacity:0.6;
+            cursor:not-allowed;
+        }
+
+        .cart-list{
+            list-style:none;
+            padding:0;
+            margin:0;
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+
+        .cart-item{
+            display:grid;
+            grid-template-columns: 1fr auto;
+            gap:8px;
+            align-items:center;
+            border:1px solid #e5e7eb;
+            border-radius:8px;
+            padding:10px;
+        }
+
+        .cart-meta{
+            display:flex;
+            flex-direction:column;
+            gap:4px;
+        }
+
+        .cart-actions{
+            display:flex;
+            gap:6px;
+        }
+
+        .summary{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-top:12px;
+            font-weight:bold;
+        }
+
+        .empty{
+            color:#6b7280;
+            font-style:italic;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Shopping Cart Demo</h2>
+
+<div class="layout">
+    <div class="card">
+        <h3>Products</h3>
+        <div class="products" id="productList">
+            <div class="product" data-id="phone" data-name="Phone" data-price="500">
+                <div class="product-title">Phone</div>
+                <div class="price">$500</div>
+                <button class="add-btn">Add to Cart</button>
+            </div>
+            <div class="product" data-id="headphones" data-name="Headphones" data-price="120">
+                <div class="product-title">Headphones</div>
+                <div class="price">$120</div>
+                <button class="add-btn">Add to Cart</button>
+            </div>
+            <div class="product" data-id="watch" data-name="Smart Watch" data-price="250">
+                <div class="product-title">Smart Watch</div>
+                <div class="price">$250</div>
+                <button class="add-btn">Add to Cart</button>
+            </div>
+            <div class="product" data-id="laptop" data-name="Laptop" data-price="900">
+                <div class="product-title">Laptop</div>
+                <div class="price">$900</div>
+                <button class="add-btn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Your Cart</h3>
+        <ul id="cartList" class="cart-list"></ul>
+        <div id="emptyState" class="empty">Cart is empty. Add a product to get started.</div>
+        <div class="summary">
+            <span>Total</span>
+            <span id="totalAmount">$0</span>
+        </div>
+        <div class="summary">
+            <button id="clearCart" class="secondary">Clear Cart</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const cart = new Map()
+    const cartList = document.getElementById("cartList")
+    const totalAmount = document.getElementById("totalAmount")
+    const emptyState = document.getElementById("emptyState")
+    const clearCart = document.getElementById("clearCart")
+
+    function formatCurrency(value){
+        return "$" + value.toLocaleString("en-US")
+    }
+
+    function renderCart(){
+        cartList.innerHTML = ""
+        let total = 0
+
+        cart.forEach((item) => {
+            total += item.price * item.qty
+
+            const li = document.createElement("li")
+            li.className = "cart-item"
+
+            const meta = document.createElement("div")
+            meta.className = "cart-meta"
+            meta.innerHTML = `
+                <div>${item.name}</div>
+                <div>${formatCurrency(item.price)} x ${item.qty}</div>
+            `
+
+            const actions = document.createElement("div")
+            actions.className = "cart-actions"
+
+            const minusBtn = document.createElement("button")
+            minusBtn.textContent = "-"
+            minusBtn.className = "secondary"
+            minusBtn.addEventListener("click", () => updateQty(item.id, -1))
+
+            const plusBtn = document.createElement("button")
+            plusBtn.textContent = "+"
+            plusBtn.addEventListener("click", () => updateQty(item.id, 1))
+
+            const removeBtn = document.createElement("button")
+            removeBtn.textContent = "Remove"
+            removeBtn.className = "secondary"
+            removeBtn.addEventListener("click", () => removeItem(item.id))
+
+            actions.append(minusBtn, plusBtn, removeBtn)
+
+            li.append(meta, actions)
+            cartList.appendChild(li)
+        })
+
+        totalAmount.textContent = formatCurrency(total)
+        emptyState.style.display = cart.size === 0 ? "block" : "none"
+        clearCart.disabled = cart.size === 0
+    }
+
+    function addToCart(id, name, price){
+        const existing = cart.get(id)
+        if(existing){
+            existing.qty += 1
+        }else{
+            cart.set(id, { id, name, price, qty: 1 })
+        }
+        renderCart()
+    }
+
+    function updateQty(id, delta){
+        const item = cart.get(id)
+        if(!item){
+            return
+        }
+        item.qty += delta
+        if(item.qty <= 0){
+            cart.delete(id)
+        }
+        renderCart()
+    }
+
+    function removeItem(id){
+        cart.delete(id)
+        renderCart()
+    }
+
+    document.querySelectorAll(".add-btn").forEach((btn) => {
+        btn.addEventListener("click", (event) => {
+            const product = event.target.closest(".product")
+            const id = product.dataset.id
+            const name = product.dataset.name
+            const price = Number(product.dataset.price)
+            addToCart(id, name, price)
+        })
+    })
+
+    clearCart.addEventListener("click", () => {
+        cart.clear()
+        renderCart()
+    })
+
+    renderCart()
+</script>
+
+</body>
+</html>
