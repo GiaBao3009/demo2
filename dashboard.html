@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        body{
+            background:#f4f6f9;
+        }
+
+        .sidebar{
+            height:100vh;
+            background:#212529;
+            color:white;
+        }
+
+        .sidebar a{
+            color:white;
+            text-decoration:none;
+            display:block;
+            padding:12px 20px;
+        }
+
+        .sidebar a:hover{
+            background:#343a40;
+        }
+
+        .card{
+            border:none;
+            border-radius:12px;
+        }
+
+        .card i{
+            font-size:30px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container-fluid">
+<div class="row">
+
+    <!-- Sidebar -->
+    <div class="col-md-2 sidebar p-0">
+
+        <h4 class="text-center py-3 border-bottom">Dashboard</h4>
+
+        <a href="#"><i class="bi bi-house"></i> Trang chủ</a>
+        <a href="#"><i class="bi bi-person"></i> Người dùng</a>
+        <a href="#"><i class="bi bi-box"></i> Sản phẩm</a>
+        <a href="#"><i class="bi bi-cart"></i> Đơn hàng</a>
+        <a href="#"><i class="bi bi-gear"></i> Cài đặt</a>
+        <a href="#"><i class="bi bi-box-arrow-right"></i> Đăng xuất</a>
+
+    </div>
+
+
+    <!-- Main -->
+    <div class="col-md-10 p-4">
+
+        <h3 class="mb-4">Trang Dashboard</h3>
+
+        <!-- Thống kê -->
+        <div class="row g-4">
+
+            <div class="col-md-3">
+                <div class="card shadow p-3">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6>Users</h6>
+                            <h4>120</h4>
+                        </div>
+                        <i class="bi bi-person text-primary"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow p-3">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6>Orders</h6>
+                            <h4>85</h4>
+                        </div>
+                        <i class="bi bi-cart text-success"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow p-3">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6>Products</h6>
+                            <h4>50</h4>
+                        </div>
+                        <i class="bi bi-box text-warning"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow p-3">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6>Revenue</h6>
+                            <h4>$1200</h4>
+                        </div>
+                        <i class="bi bi-cash text-danger"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Table -->
+        <div class="card shadow mt-5">
+            <div class="card-body">
+
+                <h5 class="mb-3">Danh sách đơn hàng</h5>
+
+                <table class="table table-striped">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Khách hàng</th>
+                            <th>Sản phẩm</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>Laptop</td>
+                            <td><span class="badge bg-success">Hoàn thành</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>Trần Văn B</td>
+                            <td>Chuột</td>
+                            <td><span class="badge bg-warning">Đang xử lý</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>3</td>
+                            <td>Lê Văn C</td>
+                            <td>Bàn phím</td>
+                            <td><span class="badge bg-danger">Hủy</span></td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+</body>
+</html>
