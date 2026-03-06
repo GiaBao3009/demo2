@@ -5,6 +5,7 @@
 <title>Login Page</title>
 
 <style>
+
 body{
     font-family: Arial, sans-serif;
     background: linear-gradient(120deg,#2980b9,#6dd5fa);
@@ -38,6 +39,11 @@ body{
     border-radius:5px;
 }
 
+.remember{
+    margin-bottom:15px;
+    font-size:14px;
+}
+
 button{
     width:100%;
     padding:10px;
@@ -62,6 +68,21 @@ button:hover{
     text-decoration:none;
     color:#2980b9;
 }
+
+.error{
+    color:red;
+    font-size:14px;
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.success{
+    color:green;
+    font-size:14px;
+    text-align:center;
+    margin-bottom:10px;
+}
+
 </style>
 
 </head>
@@ -72,14 +93,22 @@ button:hover{
 
 <h2>Login</h2>
 
-<form>
+<div id="message"></div>
+
+<form id="loginForm" action="#" method="post">
 
 <div class="input-group">
-<input type="text" placeholder="Username" required>
+<input type="text" id="username" placeholder="Username" required>
 </div>
 
 <div class="input-group">
-<input type="password" placeholder="Password" required>
+<input type="password" id="password" placeholder="Password" required>
+</div>
+
+<div class="remember">
+<label>
+<input type="checkbox"> Remember me
+</label>
 </div>
 
 <button type="submit">Login</button>
@@ -91,6 +120,32 @@ button:hover{
 </form>
 
 </div>
+
+<script>
+
+document.getElementById("loginForm").addEventListener("submit", function(e){
+
+e.preventDefault();
+
+var username = document.getElementById("username").value;
+var password = document.getElementById("password").value;
+var message = document.getElementById("message");
+
+if(username === "" || password === ""){
+message.innerHTML = "<p class='error'>Please enter username and password</p>";
+return;
+}
+
+if(username === "admin" && password === "123456"){
+message.innerHTML = "<p class='success'>Login successful</p>";
+}
+else{
+message.innerHTML = "<p class='error'>Invalid username or password</p>";
+}
+
+});
+
+</script>
 
 </body>
 </html>
